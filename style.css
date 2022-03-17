@@ -1,0 +1,29 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+.field{
+    display: none;
+    width: 600px;
+    position: relative;
+    margin: 1vh auto;
+    height: 98vh;
+    border: 1px solid green;
+}
+
+[class*="body-"]{
+    width: 25px;
+    position: absolute;
+    top: 250px;
+    left: 0;
+    height: 25px;
+    background-color: green;
+    transition: all 400ms linear;
+    border-radius: 10px;
+}
+
+#head{
+    border-radius: unset;
+}
