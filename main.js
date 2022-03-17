@@ -1,7 +1,7 @@
 let snake = document.querySelectorAll('.snake-body');
 let maxW = document.getElementById('field').offsetWidth;
 let maxH = document.getElementById('field').offsetHeight;
-console.log(maxW);
+
 let snakePos = [];
 let snakeTop = 0;
 let snakeLeft = 0;
@@ -63,17 +63,12 @@ function startGame(){
 
     spawnPoint();
 
-    movement = setInterval(() => {
-        //if(lose == true)
-            //clearInterval(movement);
-    
+    movement = setInterval(() => {    
         if(lose == false)
             snakeMove();
     }, 300);
 
     snake.forEach((body,i) => {
-       //console.log(body,i);
-      // body.style.top = `${50 * (i+1)}px`;
       snakePos.push( {left : 30*i , top : 300} );
     });
     updateSnake();
@@ -105,11 +100,8 @@ let touchPoint = false;
 
 function snakeMove(){
     let field = document.getElementById('snake-box');
-    let lastPos = 0;
     let head = snakePos[snakePos.length - 1];
-    let tail = snakePos[0];
 
-    //console.log(head,point.left,point.top);
     for(let i=0; i<snakePos.length; i++){
         if(i != snakePos.length - 1)
             if(head.top == snakePos[i].top && head.left == snakePos[i].left){
@@ -120,7 +112,6 @@ function snakeMove(){
     }
 
     if(head.top == point.top && head.left == point.left){
-       // console.log('OHOOHH TOCCATO');
         touchPoint = true;
         let rand = Math.floor(Math.random()*20);
         let rand2 = Math.floor(Math.random()*20);
@@ -143,8 +134,6 @@ function snakeMove(){
         } );
     }
 
-
-
   setTimeout(() => {
     for(let i=0 , j=1; j<snakePos.length; i++ , j++){
         snakePos[i].left = snakePos[j].left;
@@ -154,18 +143,6 @@ function snakeMove(){
     snakePos[snakePos.length - 1].left += 30*goLeft;
     snakePos[snakePos.length - 1].top += 30*goTop;
 
-    
-
-   /* snakePos.forEach((pos,i) => {
-        if(i == 0)
-            lastPos = pos.left;
-        pos.left += 30*goLeft;
-        pos.top += 30*goTop;
-     });*/
-  //  head.style.left = `${}px`;
-
-    //console.log(snakePos.length,head,tail);
-
-        updateSnake(head);
+    updateSnake(head);
   }, 50);
 }
