@@ -82,7 +82,6 @@ function updateSnake(head){
     if(head)
         if(head.top >= maxH || head.top < 0 || head.left >= maxW || head.left < 0){
             lose = true;
-            clearInterval(movement);
             effectForLose();
             return;
         }
@@ -98,6 +97,7 @@ function updateSnake(head){
 }
 
 function effectForLose(){
+    clearInterval(movement);
     snake.forEach((item,index) => {
         setTimeout(() => {
             item.style.transition="all 300ms linear";
@@ -119,8 +119,8 @@ function snakeMove(){
     for(let i=0; i<snakePos.length; i++){
         if(i != snakePos.length - 1)
             if(head.top == snakePos[i].top && head.left == snakePos[i].left){
-                console.log('hai perso');
                 lose = true;
+                effectForLose();
                 return;
             }
     }
