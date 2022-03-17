@@ -6,6 +6,8 @@ let gameStart = false;
 let lose = false;
 let goTop = 0;
 let goLeft = 1;
+let point = {top:300 , left: 300};
+
 
 //startGame();
 
@@ -40,9 +42,17 @@ window.addEventListener('keydown' , ()=>{
     }
 });
 
+function spawnPoint(){
+    let boxPoint = document.getElementById('box-point');
+    boxPoint.style.left = `${point.left}px`;
+    boxPoint.style.top = `${point.top}px`;
+}
+
 function startGame(){
     document.getElementById('field').style.display = "block";
     document.getElementById('how-to-play').style.display = "none";
+
+    spawnPoint();
 
     let movement = setInterval(() => {
         //if(lose == true)
@@ -55,7 +65,7 @@ function startGame(){
     snake.forEach((body,i) => {
        //console.log(body,i);
       // body.style.top = `${50 * (i+1)}px`;
-      snakePos.push( {left : 30*i , top : 250} );
+      snakePos.push( {left : 30*i , top : 300} );
     });
     updateSnake();
 }
@@ -71,7 +81,7 @@ function updateSnake(){
      snake[snake.length - 1].id = "head";
 }
 
-let onlyOne = 0;
+let touchPoint = false;
 
 function snakeMove(){
     let field = document.getElementById('snake-box');
@@ -79,13 +89,25 @@ function snakeMove(){
     let head = snakePos[snakePos.length - 1];
     let tail = snakePos[0];
 
-    if(onlyOne != 2){
+    console.log(head,point.left,point.top);
+
+    if(head.top == point.top && head.left == point.left){
+        console.log('OHOOHH TOCCATO');
+        touchPoint = true;
+        let rand = Math.floor(Math.random()*20);
+        let rand2 = Math.floor(Math.random()*20);
+
+        point = {top:30*rand , left: 30*rand2};
+        spawnPoint();
+    }
+
+    if(touchPoint){
         let newPart = document.createElement('div');
         newPart.className = `snake-body body-${snake.length}`;
         newPart.style.left = `${head.left}px`;
         newPart.style.top = `${head.top}px`;
         field.append(newPart);
-        onlyOne++;
+        touchPoint = false;
 
         snakePos.push( {
             left : head.left + 30*goLeft , 
@@ -118,5 +140,5 @@ function snakeMove(){
     //console.log(snakePos.length,head,tail);
 
         updateSnake();
-  }, 10);
+  }, 50);
 }

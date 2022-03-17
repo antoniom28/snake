@@ -9,19 +9,37 @@
     width: 600px;
     position: relative;
     margin: 1vh auto;
-    height: 98vh;
+    height: 600px;
     border: 1px solid green;
 }
 
 [class*="body-"]{
-    width: 25px;
+    width: 30px;
     position: absolute;
-    top: 250px;
+    top: 300px;
     left: 0;
-    height: 25px;
+    height: 30px;
     background-color: green;
     transition: all 400ms linear;
     border-radius: 10px;
+}
+
+.box-point{
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   /* background-color: skyblue; */
+}
+
+.point{
+    width: 10px;
+    height: 10px;
+    background-color: red;
 }
 
 #head{
