@@ -1,4 +1,7 @@
 let snake = document.querySelectorAll('.snake-body');
+let maxW = document.getElementById('field').offsetWidth;
+let maxH = document.getElementById('field').offsetHeight;
+console.log(maxW);
 let snakePos = [];
 let snakeTop = 0;
 let snakeLeft = 0;
@@ -7,31 +10,37 @@ let lose = false;
 let goTop = 0;
 let goLeft = 1;
 let point = {top:300 , left: 300};
-
-
-//startGame();
+let movement;
 
 window.addEventListener('keydown' , ()=>{
     switch(event.key){
         case 'w':
-            lose = false; 
-            goTop = -1; 
-            goLeft = 0;         
+            if(goTop == 0){
+                lose = false; 
+                goTop = -1; 
+                goLeft = 0; 
+            }        
         break;
         case 's':
-            lose = false; 
-            goTop = 1; 
-            goLeft = 0;         
+            if(goTop == 0){
+                lose = false; 
+                goTop = 1; 
+                goLeft = 0;  
+            }       
         break;
         case 'a':
-            lose = false; 
-            goTop = 0; 
-            goLeft = -1;         
+            if(goLeft == 0){
+                lose = false; 
+                goTop = 0; 
+                goLeft = -1; 
+            }        
         break;
         case 'd':
-            lose = false; 
-            goTop = 0; 
-            goLeft = 1;         
+            if(goLeft == 0){
+                lose = false; 
+                goTop = 0; 
+                goLeft = 1; 
+            }        
         break;
         case ' ':
             lose = !lose;       
@@ -54,7 +63,7 @@ function startGame(){
 
     spawnPoint();
 
-    let movement = setInterval(() => {
+    movement = setInterval(() => {
         //if(lose == true)
             //clearInterval(movement);
     
@@ -68,9 +77,20 @@ function startGame(){
       snakePos.push( {left : 30*i , top : 300} );
     });
     updateSnake();
+
+    maxW = document.getElementById('field').offsetWidth;
+    maxH = document.getElementById('field').offsetHeight;
 }
 
-function updateSnake(){
+function updateSnake(head){
+    if(head)
+        if(head.top >= maxH || head.top < 0 || head.left >= maxW || head.left < 0){
+            lose = true;
+            clearInterval(movement);
+            console.log('hai toccato il bordo');
+            return;
+        }
+
     snake = document.querySelectorAll('.snake-body');
     snake.forEach((body,i) => {
         body.style.left = `${snakePos[i].left}px`;
@@ -89,10 +109,18 @@ function snakeMove(){
     let head = snakePos[snakePos.length - 1];
     let tail = snakePos[0];
 
-    console.log(head,point.left,point.top);
+    //console.log(head,point.left,point.top);
+    for(let i=0; i<snakePos.length; i++){
+        if(i != snakePos.length - 1)
+            if(head.top == snakePos[i].top && head.left == snakePos[i].left){
+                console.log('hai perso');
+                lose = true;
+                return;
+            }
+    }
 
     if(head.top == point.top && head.left == point.left){
-        console.log('OHOOHH TOCCATO');
+       // console.log('OHOOHH TOCCATO');
         touchPoint = true;
         let rand = Math.floor(Math.random()*20);
         let rand2 = Math.floor(Math.random()*20);
@@ -115,8 +143,7 @@ function snakeMove(){
         } );
     }
 
-    
-    
+
 
   setTimeout(() => {
     for(let i=0 , j=1; j<snakePos.length; i++ , j++){
@@ -139,6 +166,6 @@ function snakeMove(){
 
     //console.log(snakePos.length,head,tail);
 
-        updateSnake();
+        updateSnake(head);
   }, 50);
 }
