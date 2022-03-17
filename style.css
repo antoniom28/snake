@@ -20,7 +20,7 @@
     left: 0;
     height: 30px;
     background-color: green;
-    transition: all 400ms linear;
+    transition: all 150ms linear;
     border-radius: 10px;
 }
 
@@ -44,4 +44,58 @@
 
 #head{
     border-radius: unset;
+}
+
+.score-box{
+    position: fixed;
+    text-align: center;
+    top: 10px;
+    left: 10px;
+}
+
+#how-to-play{
+    text-align: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+#how-to-play button{
+    background-color: green;
+    width: 100px;
+    height: 35px;
+    border: 3px outset #02b102;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+#how-to-play button:hover{
+    border: 3px inset #02b102;
+    transform: scale(0.95);
+}
+
+#lose-box{
+    display: none;
+    position: fixed;
+    width: 200px;
+    height: 200px;
+    background-color: red;
+    top: 50vh;
+    left: 50vw;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    color: white;
+    transform: translate(-50% , -50%);
+}
+
+#lose-box a{
+    text-decoration: none;
+    color: white;
+}
+
+#lose-box a:hover{
+    text-decoration: underline white;
+    color: orange;
 }

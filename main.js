@@ -3,53 +3,12 @@ let maxW = document.getElementById('field').offsetWidth;
 let maxH = document.getElementById('field').offsetHeight;
 
 let snakePos = [];
-let snakeTop = 0;
-let snakeLeft = 0;
-let gameStart = false;
 let lose = false;
 let goTop = 0;
 let goLeft = 1;
 let point = {top:300 , left: 300};
 let movement;
-
-window.addEventListener('keydown' , ()=>{
-    switch(event.key){
-        case 'w':
-            if(goTop == 0){
-                lose = false; 
-                goTop = -1; 
-                goLeft = 0; 
-            }        
-        break;
-        case 's':
-            if(goTop == 0){
-                lose = false; 
-                goTop = 1; 
-                goLeft = 0;  
-            }       
-        break;
-        case 'a':
-            if(goLeft == 0){
-                lose = false; 
-                goTop = 0; 
-                goLeft = -1; 
-            }        
-        break;
-        case 'd':
-            if(goLeft == 0){
-                lose = false; 
-                goTop = 0; 
-                goLeft = 1; 
-            }        
-        break;
-        case ' ':
-            lose = !lose;       
-        break;
-        case 'Space':
-            lose = false;       
-        break;
-    }
-});
+let noClick = false;
 
 function spawnPoint(){
     let boxPoint = document.getElementById('box-point');
@@ -58,6 +17,48 @@ function spawnPoint(){
 }
 
 function startGame(){
+    window.addEventListener('keypress' , ()=>{
+        if(!noClick){
+            switch(event.key){
+                case 'w':
+                    if(goTop == 0){
+                        lose = false; 
+                        goTop = -1; 
+                        goLeft = 0; 
+                    }        
+                break;
+                case 's':
+                    if(goTop == 0){
+                        lose = false; 
+                        goTop = 1; 
+                        goLeft = 0;  
+                    }       
+                break;
+                case 'a':
+                    if(goLeft == 0){
+                        lose = false; 
+                        goTop = 0; 
+                        goLeft = -1; 
+                    }        
+                break;
+                case 'd':
+                    if(goLeft == 0){
+                        lose = false; 
+                        goTop = 0; 
+                        goLeft = 1; 
+                    }        
+                break;
+                case ' ':
+                    lose = !lose;       
+                break;
+                case 'Space':
+                    lose = false;       
+                break;
+            }
+            noClick = true;
+        }
+    });
+
     document.getElementById('field').style.display = "block";
     document.getElementById('how-to-play').style.display = "none";
 
@@ -66,7 +67,7 @@ function startGame(){
     movement = setInterval(() => {    
         if(lose == false)
             snakeMove();
-    }, 300);
+    }, 150);
 
     snake.forEach((body,i) => {
       snakePos.push( {left : 30*i , top : 300} );
@@ -75,13 +76,14 @@ function startGame(){
 }
 
 function updateSnake(head){
+    noClick = false;
     maxW = document.getElementById('field').offsetWidth;
     maxH = document.getElementById('field').offsetHeight;
     if(head)
         if(head.top >= maxH || head.top < 0 || head.left >= maxW || head.left < 0){
             lose = true;
             clearInterval(movement);
-            console.log('hai toccato il bordo');
+            effectForLose();
             return;
         }
 
@@ -93,6 +95,19 @@ function updateSnake(head){
      });
 
      snake[snake.length - 1].id = "head";
+}
+
+function effectForLose(){
+    snake.forEach((item,index) => {
+        setTimeout(() => {
+            item.style.transition="all 300ms linear";
+            item.style.transform="scale(0)";
+        }, 150*index);
+    });
+    setTimeout(() => {
+        document.getElementById('snake-box').innerHTML = "";
+        document.getElementById('lose-box').style.display = "flex";
+    }, 150*snake.length);
 }
 
 let touchPoint = false;
@@ -120,6 +135,8 @@ function snakeMove(){
     }
 
     if(touchPoint){
+        let score = document.getElementById('score');
+        score.innerHTML =parseInt(score.innerHTML) + 1;
         let newPart = document.createElement('div');
         newPart.className = `snake-body body-${snake.length}`;
         newPart.style.left = `${head.left}px`;
@@ -143,5 +160,5 @@ function snakeMove(){
     snakePos[snakePos.length - 1].top += 30*goTop;
 
     updateSnake(head);
-  }, 50);
+  }, 0);
 }
