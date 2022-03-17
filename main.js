@@ -72,12 +72,11 @@ function startGame(){
       snakePos.push( {left : 30*i , top : 300} );
     });
     updateSnake();
-
-    maxW = document.getElementById('field').offsetWidth;
-    maxH = document.getElementById('field').offsetHeight;
 }
 
 function updateSnake(head){
+    maxW = document.getElementById('field').offsetWidth;
+    maxH = document.getElementById('field').offsetHeight;
     if(head)
         if(head.top >= maxH || head.top < 0 || head.left >= maxW || head.left < 0){
             lose = true;
