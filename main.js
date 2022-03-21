@@ -145,8 +145,8 @@ function snakeMove(){
         touchPoint = false;
 
         snakePos.push( {
-            left : head.left + 30*goLeft , 
-            top : head.top + 30*goTop, 
+            left : head.left , 
+            top : head.top , 
         } );
     }
 
