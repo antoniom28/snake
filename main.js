@@ -25,6 +25,7 @@ function startGame(){
                         lose = false; 
                         goTop = -1; 
                         goLeft = 0; 
+                        noClick = true;
                     }        
                 break;
                 case 's':
@@ -32,6 +33,7 @@ function startGame(){
                         lose = false; 
                         goTop = 1; 
                         goLeft = 0;  
+                        noClick = true;
                     }       
                 break;
                 case 'a':
@@ -39,6 +41,7 @@ function startGame(){
                         lose = false; 
                         goTop = 0; 
                         goLeft = -1; 
+                        noClick = true;
                     }        
                 break;
                 case 'd':
@@ -46,13 +49,11 @@ function startGame(){
                         lose = false; 
                         goTop = 0; 
                         goLeft = 1; 
+                        noClick = true;
                     }        
                 break;
                 case ' ':
                     lose = !lose;       
-                break;
-                case 'Space':
-                    lose = false;       
                 break;
             }
             noClick = true;
